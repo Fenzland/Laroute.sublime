@@ -1,0 +1,217 @@
+%YAML 1.2
+---
+name: Laroute
+file_extensions:
+  - laroute
+scope: text.laroute
+contexts:
+  main:
+    - include: empty-line
+    - include: comment
+    - include: include
+    - include: group
+    - include: route
+
+  empty-line:
+    - match: '^(\t*)(\n)$'
+      captures:
+        1: indent.laroute
+        2: empty-line coding.laroute
+
+  comment:
+    - match: '(^\t*)(#)'
+      captures:
+        1: indent.laroute
+      push:
+        - meta_scope: comment.laroute
+        - match: '^(?!\1\t)'
+          pop: true
+
+  include:
+    - match: '(^\t*)(@)'
+      captures:
+        1: indent.laroute
+        2: punctuation.separator.laroute
+      push:
+        - meta_content_scope: string.include.laroute
+        - match: '$'
+          pop: true
+
+  group:
+    - match: '(^\t*)(:)'
+      captures:
+        1: indent.laroute
+        2: meta.separator.laroute
+      push:
+        - meta_scope: group.laroute
+        - match: '\n'
+          pop: true
+
+        # Middleware
+        - match: '>'
+          captures:
+            0: punctuation.separator.laroute
+          push:
+            - meta_content_scope: support middleware.group.laroute
+            - match: '(?= )|$'
+              pop: true
+
+        # Domain
+        - match: '@'
+          captures:
+            0: punctuation.separator.laroute
+          push:
+            - meta_content_scope: string domain.group.laroute
+            - match: '(?= )|$'
+              pop: true
+
+            # parameter
+            - match: '({)(\w+)(\??})'
+              captures:
+                1: constant parameter-start.laroute
+                2: variable parameter.laroute
+                3: constant parameter-end.laroute
+
+        # Prefix
+        - match: '/'
+          push:
+            - meta_scope: string.path.group.laroute
+            - match: '(?= )|$'
+              pop: true
+
+            # parameter
+            - match: '({)(\w+)(\??})'
+              captures:
+                1: constant parameter-start.laroute
+                2: variable parameter.laroute
+                3: constant parameter-end.laroute
+
+        # Namespace
+        - match: '&'
+          captures:
+            0: punctuation.separator.laroute
+          push:
+            - meta_content_scope: support.namespace.group.laroute
+            - match: '(?= )|$'
+              pop: true
+
+        # Name prefix
+        - match: '\+'
+          captures:
+            0: punctuation.separator.laroute
+          push:
+            - meta_content_scope: entity.name-prefix.group.laroute
+            - match: '(?= )|$'
+              pop: true
+
+  route:
+    # Route Keyword
+    - match: '(^\t*)(?:((?:[A-Z]| (?=[A-Z]))+)|(any|resource))'
+      captures:
+        1: indentation.laroute
+        2: storage.method.laroute
+        3: storage.method.laroute
+        4: storage.method.laroute
+      push:
+        - meta_scope: route.laroute
+        - match: '^(?!\1\t)'
+          pop: true
+
+        - match: '\b (?=/)'
+          push:
+            - meta_scope: route.define.laroute
+            - match: '$'
+              pop: true
+
+            # Path
+            - match: '/'
+              push:
+                - meta_scope: string path.route.laroute
+                - match: '(?= )|$'
+                  pop: true
+
+                # parameter
+                - match: '({)(\w+)(\??})'
+                  captures:
+                    1: constant parameter-start.laroute
+                    2: variable parameter.laroute
+                    3: constant parameter-end.laroute
+
+            # Name
+            - match: ' ([\w-.:]+)$'
+              captures:
+                1: entity.name.route.laroute
+
+        # Route modifier
+        - match: '^'
+          push:
+            - meta_scope: route.modifier.laroute
+            - match: '$'
+              pop: true
+
+            # Parameter condition
+            - match: '^(\t+)(\?)(\w+) '
+              captures:
+                1: indentation.laroute
+                2: punctuation.separator.laroute
+                3: variable.laroute
+              push:
+                - meta_content_scope: regex.laroute
+                - match: '$'
+                  pop: true
+                - include: laroute-php-support.sublime-syntax#regex
+
+            # Middleware
+            - match: '^(\t+)(?=>[\\\w])'
+              captures:
+                1: indentation.laroute
+              push:
+                - match: '$'
+                  pop: true
+                - match: '(>)([\w\\]+)+'
+                  captures:
+                    1: punctuation.separator.laroute
+                    2: support middleware.route.laroute
+
+            # Action
+            - match: '^(\t+)(>>)([\w\\]+)(?:(@)(\w+))?$'
+              captures:
+                1: indentation.laroute
+                2: punctuation.separator.laroute
+                3: entity action.route.laroute
+                4: punctuation.separator.laroute
+                5: support.variable action.route.laroute
+
+            # Closure Action
+            - match: '^(\t+)(\()'
+              captures:
+                1: indentation.laroute
+                2: punctuation.separator.laroute
+              push:
+                - meta_scope: closure.laroute
+                - match: '$'
+                  pop: true
+                - match: ' '
+                  push:
+                    - meta_content_scope: source.php
+                    - match: ' (?=\))'
+                      captures:
+                        0: punctuation.separator.laroute
+                      pop: true
+                    - include: 'laroute-php-support.sublime-syntax#function-parameters'
+                - match: '(\)=>) '
+                  captures:
+                    0: punctuation.separator.laroute
+                  push:
+                    - meta_content_scope: source.php return.value.laroute
+                    - match: '$'
+                      pop: true
+                    - include: 'laroute-php-support.sublime-syntax#expressions'
+                - match: '(\)=>\{)$'
+                  captures:
+                    0: punctuation.separator.laroute
+                  push:
+                    - meta_content_scope: source.php
+                    - match: '(?=\}$)'
+                      pop: true
+                    - include: 'laroute-php-support.sublime-syntax#function-body'
