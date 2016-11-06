@@ -11,6 +11,7 @@ contexts:
     - include: include
     - include: group
     - include: route
+    - include: resource-routes
 
   empty-line:
     - match: '^(\t*)(\n)$'
@@ -106,7 +107,7 @@ contexts:
 
   route:
     # Route Keyword
-    - match: '(^\t*)(?:((?:[A-Z]| (?=[A-Z]))+)|(any|resource))'
+    - match: '(^\t*)(?:((?:[A-Z]| (?=[A-Z]))+)|(any))'
       captures:
         1: indentation.laroute
         2: storage.method.laroute
@@ -215,3 +216,64 @@ contexts:
                     - match: '(?=\}$)'
                       pop: true
                     - include: 'laroute-php-support.sublime-syntax#function-body'
+
+  resource-routes:
+    # Route Keyword
+    - match: '(^\t*)(resource)'
+      captures:
+        1: indentation.laroute
+        2: storage.method.laroute
+      push:
+        - meta_scope: route.laroute
+        - match: '^(?!\1\t)'
+          pop: true
+
+        - match: '\b (?=/)'
+          push:
+            - meta_scope: route.define.laroute
+            - match: '$'
+              pop: true
+
+            # Path
+            - match: '/'
+              push:
+                - meta_scope: string path.route.laroute
+                - match: '(?= )|$'
+                  pop: true
+
+                # parameter
+                - match: '({)(\w+)(\??})'
+                  captures:
+                    1: constant parameter-start.laroute
+                    2: variable parameter.laroute
+                    3: constant parameter-end.laroute
+
+            # Name
+            - match: ' ([\w-.:]+)$'
+              captures:
+                1: entity.name.route.laroute
+
+        # Route modifier
+        - match: '^'
+          push:
+            - meta_scope: route.modifier.laroute
+            - match: '$'
+              pop: true
+
+            # Actions only or except
+            - match: '^(\t+)(\*|-)([a-z ]+)$'
+              captures:
+                1: indentation.laroute
+                2: punctuation.separator.laroute
+                3: string action.route.laroute
+                4: punctuation.separator.laroute
+                5: support.variable action.route.laroute
+
+            # Action
+            - match: '^(\t+)(>>)([\w\\]+)(?:(@)(\w+))?$'
+              captures:
+                1: indentation.laroute
+                2: punctuation.separator.laroute
+                3: entity action.route.laroute
+                4: punctuation.separator.laroute
+                5: support.variable action.route.laroute
