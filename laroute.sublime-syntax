@@ -49,11 +49,18 @@ contexts:
           pop: true
 
         # Middleware
-        - match: '>'
-          captures:
-            0: punctuation.separator.laroute
+        - match: '(?= >)'
           push:
-            - meta_content_scope: support middleware.group.laroute
+            - meta_content_scope: middleware.group.laroute
+            - match: '(>)([\w-]+)'
+              captures:
+                1: punctuation.separator.laroute
+                2: support middleware.name.group.laroute
+            - match: '(?= )|$'
+            - match: '(:|,)([\w-]+)'
+              captures:
+                1: punctuation.separator.laroute
+                2: string middleware.parameter.group.laroute
             - match: '(?= )|$'
               pop: true
 
