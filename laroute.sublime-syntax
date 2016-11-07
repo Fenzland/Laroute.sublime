@@ -80,7 +80,7 @@ contexts:
                 2: variable parameter.laroute
                 3: constant parameter-end.laroute
 
-        # Prefix
+        # Path prefix
         - match: '/'
           push:
             - meta_scope: string.path.group.laroute
