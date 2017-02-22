@@ -65,12 +65,11 @@ contexts:
               captures:
                 1: punctuation.separator.laroute
                 2: support middleware.name.group.laroute
-            - match: '(?= )|$'
-            - match: '(:|,)([\w-]+)'
+            - match: '(:|,)([^\s,]+)'
               captures:
                 1: punctuation.separator.laroute
                 2: string middleware.parameter.group.laroute
-            - match: '(?= )|$'
+            - match: '(?=\s)'
               pop: true
 
         # Domain
@@ -79,7 +78,7 @@ contexts:
             0: punctuation.separator.laroute
           push:
             - meta_content_scope: string domain.group.laroute
-            - match: '(?= )|$'
+            - match: '(?=\s)'
               pop: true
 
             # parameter
@@ -93,7 +92,7 @@ contexts:
         - match: '/'
           push:
             - meta_scope: string.path.group.laroute
-            - match: '(?= )|$'
+            - match: '(?=\s)'
               pop: true
 
             # parameter
@@ -109,7 +108,7 @@ contexts:
             0: punctuation.separator.laroute
           push:
             - meta_content_scope: support.namespace.group.laroute
-            - match: '(?= )|$'
+            - match: '(?=\s)'
               pop: true
 
         # Name prefix
@@ -118,7 +117,7 @@ contexts:
             0: punctuation.separator.laroute
           push:
             - meta_content_scope: entity.name-prefix.group.laroute
-            - match: '(?= )|$'
+            - match: '(?=\s)'
               pop: true
 
   route:
@@ -145,7 +144,7 @@ contexts:
             - match: '/'
               push:
                 - meta_scope: string path.route.laroute
-                - match: '(?= )|$'
+                - match: '(?=\s)'
                   pop: true
 
                 # parameter
@@ -255,7 +254,7 @@ contexts:
             - match: '/'
               push:
                 - meta_scope: string path.route.laroute
-                - match: '(?= )|$'
+                - match: '(?=\s)'
                   pop: true
 
                 # parameter
