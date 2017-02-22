@@ -665,6 +665,11 @@ contexts:
           pop: true
 
   comments:
+
+    - match: '(^ +)|([ \t]+$)'
+      captures:
+        0: invalid.illegal
+
     # This only highlights a docblock if the first line contains only /** or
     # /**#@+ (which is used for docblock templates). Otherwise block-level
     # comment would be highlighted as invalid for constructs such as /**** ****/

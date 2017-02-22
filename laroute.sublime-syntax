@@ -6,12 +6,18 @@ file_extensions:
 scope: text.laroute
 contexts:
   main:
+    - include: white-space-warning
     - include: empty-line
     - include: comment
     - include: include
     - include: group
     - include: route
     - include: resource-routes
+
+  white-space-warning:
+    - match: '(^ +)|([ \t]+$)'
+      captures:
+        0: invalid.illegal
 
   empty-line:
     - match: '^(\t*)(\n)$'
@@ -27,6 +33,7 @@ contexts:
         - meta_scope: comment.laroute
         - match: '^(?!\1\t)'
           pop: true
+        - include: white-space-warning
 
   include:
     - match: '(^\t*)(@)'
@@ -37,6 +44,7 @@ contexts:
         - meta_content_scope: string.include.laroute
         - match: '$'
           pop: true
+        - include: white-space-warning
 
   group:
     - match: '(^\t*)(:)'
@@ -47,6 +55,7 @@ contexts:
         - meta_scope: group.laroute
         - match: '\n'
           pop: true
+        - include: white-space-warning
 
         # Middleware
         - match: '(?= >)'
@@ -130,6 +139,7 @@ contexts:
             - meta_scope: route.define.laroute
             - match: '$'
               pop: true
+            - include: white-space-warning
 
             # Path
             - match: '/'
