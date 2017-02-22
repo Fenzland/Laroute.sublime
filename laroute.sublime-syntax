@@ -189,6 +189,12 @@ contexts:
                   captures:
                     1: punctuation.separator.laroute
                     2: support middleware.route.laroute
+                - match: '(:|,)([^\s,]+)'
+                  captures:
+                    1: punctuation.separator.laroute
+                    2: string middleware.parameter.group.laroute
+                - match: '(?=\s)'
+                  pop: true
 
             # Action
             - match: '^(\t+)(>>)([\w\\]+)(?:(@)(\w+))?$'
