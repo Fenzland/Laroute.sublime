@@ -82,11 +82,7 @@ contexts:
               pop: true
 
             # parameter
-            - match: '({)(\w+)(\??})'
-              captures:
-                1: constant parameter-start.laroute
-                2: variable parameter.laroute
-                3: constant parameter-end.laroute
+            - include: parameter
 
         # Path prefix
         - match: '/'
@@ -96,11 +92,7 @@ contexts:
               pop: true
 
             # parameter
-            - match: '({)(\w+)(\??})'
-              captures:
-                1: constant parameter-start.laroute
-                2: variable parameter.laroute
-                3: constant parameter-end.laroute
+            - include: parameter
 
         # Namespace
         - match: '&'
@@ -148,11 +140,7 @@ contexts:
                   pop: true
 
                 # parameter
-                - match: '({)(\w+)(\??})'
-                  captures:
-                    1: constant parameter-start.laroute
-                    2: variable parameter.laroute
-                    3: constant parameter-end.laroute
+                - include: parameter
 
             # Name
             - match: ' ([\w-.:]+)$'
@@ -264,11 +252,7 @@ contexts:
                   pop: true
 
                 # parameter
-                - match: '({)(\w+)(\??})'
-                  captures:
-                    1: constant parameter-start.laroute
-                    2: variable parameter.laroute
-                    3: constant parameter-end.laroute
+                - include: parameter
 
             # Name
             - match: ' ([\w-.:]+)$'
@@ -299,3 +283,11 @@ contexts:
                 3: entity action.route.laroute
                 4: punctuation.separator.laroute
                 5: support.variable action.route.laroute
+
+  parameter:
+    - match: '({)(\w+)(?:/((?:(?>\\)/|[^/])+)/)?(\??})'
+      captures:
+        1: constant parameter-start.laroute
+        2: variable parameter.laroute
+        3: regex.laroute
+        4: constant parameter-end.laroute
