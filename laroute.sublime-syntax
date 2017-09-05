@@ -3,6 +3,7 @@
 name: Laroute
 file_extensions:
   - laroute
+  - route
 scope: text.laroute
 contexts:
   main:
