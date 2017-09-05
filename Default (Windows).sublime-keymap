@@ -1,0 +1,127 @@
+[
+	{"keys":["enter",],"command":"insert_snippet","args":{"contents":"\n \t",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["ctrl+enter",],"command":"insert_snippet","args":{"contents":"\n \t",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["enter",],"command":"insert_snippet","args":{"contents":"\n \t$0\n",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^\\}$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["{",],"command":"insert_snippet","args":{"contents":"{\n \t$0\n}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["(",],"command":"insert_snippet","args":{"contents":"(${1/(.+)/(?1: )/g}$1${1/(.+)/(?1: )/g})=>",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute route","match_all":true,},
+		],
+	},
+	{"keys":[":",],"command":"insert_snippet","args":{"contents":": $1\n\t${0:# group}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["/",],"command":"insert_snippet","args":{"contents":"/${1:path-prefix} $0",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*: ([^\\/]\\S* )*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^( [^\\/]\\S*)* ?$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":[">",],"command":"insert_snippet","args":{"contents":">${1:middleware} $0",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*: (\\S+ )*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^( \\S+)* ?$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["+",],"command":"insert_snippet","args":{"contents":"+${1:name-prefix} $0",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*: ([^\\+]\\S* )*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^( [^\\+]\\S*)* ?$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["&",],"command":"insert_snippet","args":{"contents":"&${1:NameSpace} $0",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*: ([^&]\\S* )*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^( [^&]\\S*)* ?$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["{",],"command":"insert_snippet","args":{"contents":"{${1:parameter}}$0",},"context":
+		[
+			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+			{"key":"selector","operator":"equal","operand":"text.laroute string.path","match_all":true,},
+		],
+	},
+	{"keys":["H",],"command":"insert_snippet","args":{"contents":"HEAD$1 /${2:path} ${3:name}\n\t>>${4:Controller}@${5:method}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["O",],"command":"insert_snippet","args":{"contents":"OPTIONS$1 /${2:path} ${3:name}\n\t>>${4:Controller}@${5:method}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["G",],"command":"insert_snippet","args":{"contents":"GET$1 /${2:path} ${3:name}\n\t>>${4:Controller}@${5:method}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["P",],"command":"insert_snippet","args":{"contents":"P${1:O}${1/(^O$)|(^(?:U|OS)$)|(^A$)|(^AT$)|(^ATC$)|(^(?:OST|UT|ATCH)$)|(^.*$)/(?1:ST)(?2:T)(?3:TCH)(?4:CH)(?5:H)(?6:)(?7: --ERROR-- )/}$2 /${3:path} ${4:name}\n\t>>${5:Controller}@${6:method}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["D",],"command":"insert_snippet","args":{"contents":"DELETE$1 /${2:path} ${3:name}\n\t>>${4:Controller}@${5:method}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["r",],"command":"insert_snippet","args":{"contents":"resource /${2:${1/_/-/g}} ${1:resource_name}\n\t>>${3:ResourceController}",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+	{"keys":["a",],"command":"insert_snippet","args":{"contents":"\n# The 'any' route is not recommended.\nany /${1:path} ${2:name}\n\t>>${3:Controller}@${4:method}\n# The 'any' route is not recommended.\n",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t*$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment - route","match_all":true,},
+		],
+	},
+]
