@@ -6,6 +6,13 @@
 			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
 		],
 	},
+	{"keys":["keypad_enter",],"command":"insert_snippet","args":{"contents":"\n \t",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
 	{"keys":["ctrl+enter",],"command":"insert_snippet","args":{"contents":"\n \t",},"context":
 		[
 			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
@@ -13,7 +20,21 @@
 			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
 		],
 	},
+	{"keys":["ctrl+keypad_enter",],"command":"insert_snippet","args":{"contents":"\n \t",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
 	{"keys":["enter",],"command":"insert_snippet","args":{"contents":"\n \t$0\n",},"context":
+		[
+			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
+			{"key":"following_text","operator":"regex_match","operand":"^\\}$","match_all":true,},
+			{"key":"selector","operator":"equal","operand":"text.laroute - comment","match_all":true,},
+		],
+	},
+	{"keys":["keypad_enter",],"command":"insert_snippet","args":{"contents":"\n \t$0\n",},"context":
 		[
 			{"key":"preceding_text","operator":"regex_match","operand":"^\t+\\(( .+ )?\\)=>\\{$","match_all":true,},
 			{"key":"following_text","operator":"regex_match","operand":"^\\}$","match_all":true,},
